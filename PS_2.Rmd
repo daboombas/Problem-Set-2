@@ -28,7 +28,10 @@ data("congress")
 ```{r question1}
 # Here, I used the arrange function and sliced the top row, pulling the date column value out for the answer, q1.
 
-q1 <- endorsements_2020 %>% arrange(date) %>% slice(1) %>% pull(date)
+q1 <- endorsements_2020 %>% 
+  arrange(date) %>% 
+  slice(1) %>% 
+  pull(date)
 ```
 
 1) Earliest date for an endorsement in the dataset is `r q1`.
@@ -37,23 +40,29 @@ q1 <- endorsements_2020 %>% arrange(date) %>% slice(1) %>% pull(date)
 # Here, I used the arrange function again, but arranged the columns in descending order according to date.
 # Again, I sliced the top row and pull out the date value.
 
-q2 <- endorsements_2020 %>% arrange(desc(date)) %>% slice(1) %>% pull(date)
+q2 <- endorsements_2020 %>% 
+  arrange(desc(date)) %>% 
+  slice(1) %>% 
+  pull(date)
 ```
 
 2) The most recent date for an endorsement is `r q2`.
 
 ```{r question3}
-# heree i use abc cde ddddd to do what, dfsdfs
-# i could also have used zzz xxx yyy to achieve the same effect.
+# Here, I filtered by only the observations with position being mayor.
+# Then, I filtered again by mayors who endorsed Pete Buttigieg. 
 
-q3 <- endorsements_2020 %>% filter(position=="mayor") %>% filter(endorsee=="Pete Buttigieg") %>% slice(1) %>% pull(endorser)
+q3 <- endorsements_2020 %>% filter(position=="mayor") %>% 
+  filter(endorsee=="Pete Buttigieg") %>% 
+  slice(1) %>% 
+  pull(endorser)
 ```
 
 3) `r q3` is the mayor that has endorsed Pete Buttigieg.
 
 ```{r question4}
-# heree i use abc cde ddddd to do what, dfsdfs
-# i could also have used zzz xxx yyy to achieve the same effect.
+# Similarly, I filtered by only New Hampshire.
+# Next, I summarized by the mean of the points and sliced the average in the first row.
 
 q4 <- endorsements_2020 %>% filter(state=="NH") %>% summarize(avgpoints = mean(points)) %>% slice(1) %>% pull(avgpoints)
 ```
