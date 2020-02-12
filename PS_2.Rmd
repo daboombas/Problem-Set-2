@@ -88,6 +88,7 @@ q5 <- endorsements_2020 %>%
 
 ```{r question6}
 # Using the "$" sign, I selected the appropriate columns to observe the variable class of each column.
+# Can also use class(endorsements_2020 %>% pull("variable")) to get the variable classes.
 
 q6a <- class(endorsements_2020$position)
 q6b <- class(endorsements_2020$endorser)
@@ -96,7 +97,7 @@ q6c <- class(endorsements_2020$points)
 
 6) The type of data you are working with (words, numbers, categories, or fancier data types like dates) determines what kinds of operations you can perform on it. To distinguish different types of data, it’s useful to use the function class(). This function allows you to get to know what kind of data you’re working with.
 
-6a. The variable “position” is a `r q6a` class of variable. #can also use class(endorsements_2020 %>% pull(position))
+6a. The variable “position” is a `r q6a` class of variable.
 
 6b. The variable “endorser” is a `r q6b` class of variable.
 
