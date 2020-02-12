@@ -6,36 +6,85 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE} 
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = F)
 ```
 
-```{r loading the necessary data}
+```{r packages}
+# In this code chunk, I load the necessary library packages. 
+
 library(tidyverse) 
 library(fivethirtyeight)
 library(ggplot2)
 library(ggthemes)
 library(gov.1005.data)
+```
+
+```{r data}
+# Then, I imported the datasets, "endorsements_2020" and "congress," so that I can answer the following mad libs.
 data("endorsements_2020")
 data("congress")
 ```
 
-1) Earliest date for an endorsement in the dataset is `r endorsements_2020 %>% arrange(date) %>% slice(1) %>% pull(date) `.
+```{r question1}
+# Here, I used the arrange function and sliced the top row, pulling the date column value out for the answer, q1.
 
-2) The most recent date for an endorsement is `r endorsements_2020 %>% arrange(desc(date)) %>% slice(1) %>% pull(date) `.
+q1 <- endorsements_2020 %>% arrange(date) %>% slice(1) %>% pull(date)
+```
 
-3) `r endorsements_2020 %>% filter(position=="mayor") %>% filter(endorsee=="Pete Buttigieg") %>% slice(1) %>% pull(endorser) ` is the mayor that has endorsed Pete Buttigieg.
+1) Earliest date for an endorsement in the dataset is `r q1`.
 
-4) Endorsers from New Hampshire have an average of `r endorsements_2020 %>% filter(state=="NH") %>% summarize(avgpoints = mean(points)) %>% slice(1) %>% pull(avgpoints) ` endorsement points. (Learn how fivethirtyeight calculates endorsement points here.)
+```{r question2}
+# Here, I used the arrange function again, but arranged the columns in descending order according to date.
+# Again, I sliced the top row and pull out the date value.
 
-5) Between them, the two female candidates who remain in the race (Amy Klobuchar and Elizabeth Warren) have a total of `r endorsements_2020 %>% filter(endorsee=="Amy Klobuchar" | endorsee== "Elizabeth Warren") %>% summarize(total=sum(points)) %>% slice(1) %>% pull(total) ` endorsement points.
+q2 <- endorsements_2020 %>% arrange(desc(date)) %>% slice(1) %>% pull(date)
+```
+
+2) The most recent date for an endorsement is `r q2`.
+
+```{r question3}
+# heree i use abc cde ddddd to do what, dfsdfs
+# i could also have used zzz xxx yyy to achieve the same effect.
+
+q3 <- endorsements_2020 %>% filter(position=="mayor") %>% filter(endorsee=="Pete Buttigieg") %>% slice(1) %>% pull(endorser)
+```
+
+3) `r q3` is the mayor that has endorsed Pete Buttigieg.
+
+```{r question4}
+# heree i use abc cde ddddd to do what, dfsdfs
+# i could also have used zzz xxx yyy to achieve the same effect.
+
+q4 <- endorsements_2020 %>% filter(state=="NH") %>% summarize(avgpoints = mean(points)) %>% slice(1) %>% pull(avgpoints)
+```
+
+4) Endorsers from New Hampshire have an average of `r q4` endorsement points. (Learn how fivethirtyeight calculates endorsement points here.)
+
+```{r question5}
+# heree i use abc cde ddddd to do what, dfsdfs
+# i could also have used zzz xxx yyy to achieve the same effect.
+
+q5 <- endorsements_2020 %>% filter(endorsee=="Amy Klobuchar" | endorsee== "Elizabeth Warren") %>% summarize(total=sum(points)) %>% slice(1) %>% pull(total)
+```
+
+5) Between them, the two female candidates who remain in the race (Amy Klobuchar and Elizabeth Warren) have a total of `r q5` endorsement points.
+
+```{r question6}
+# heree i use abc cde ddddd to do what, dfsdfs
+# i could also have used zzz xxx yyy to achieve the same effect.
+
+q6a <- class(endorsements_2020$position)
+q6b <- class(endorsements_2020$endorser)
+q6c <- class(endorsements_2020$points)
+```
 
 6) The type of data you are working with (words, numbers, categories, or fancier data types like dates) determines what kinds of operations you can perform on it. To distinguish different types of data, it’s useful to use the function class(). This function allows you to get to know what kind of data you’re working with.
 
-6a. The variable “position” is a `r class(endorsements_2020$position)` class of variable.
+6a. The variable “position” is a `r q6a` class of variable. #can also use class(endorsements_2020 %>% pull(position))
 
-6b. The variable “endorser” is a `r class(endorsements_2020$endorser) ` class of variable.
+6b. The variable “endorser” is a `r q6b` class of variable.
 
-6c. The variable “points” is a `r class(endorsements_2020$points) `numeric class of variable.
+6c. The variable “points” is a `r q6c` numeric class of variable.
 
 ```{r creating labels in advance for the axis tick texts}
 xlabels <- c("1950", "'60", "'70", "'80", "'90", "2000", "'10")
@@ -50,12 +99,18 @@ age.data <- congress %>%
 ```
 
 ```{r the plot itself!}
+
+
+
 ggplot(age.data, aes(year, avg.age, color=party)) + 
   geom_line(show.legend = FALSE) + 
+  # stg
   labs(title="Average Age of Members of Congress", 
       subtitle="At start of term, 1947-2013", 
       caption="source: fivethirtyeight package") + 
-  scale_color_manual(values=c('blue','red')) + scale_x_continuous(breaks=seq(1950,2010, 10), 
+  scale_color_manual(values=c('blue','red')) +
+  # dddddd
+  scale_x_continuous(breaks=seq(1950,2010, 10), 
       limits=c(1947, 2013), labels=xlabels) +
   scale_y_continuous(breaks=seq(40,60, 5), limits=c(40,63), labels=ylabels) +
   annotate("text", x = 1965.7, y = 57, label = "Republicans", color="red") +
