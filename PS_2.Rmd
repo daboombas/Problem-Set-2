@@ -64,23 +64,30 @@ q3 <- endorsements_2020 %>% filter(position=="mayor") %>%
 # Similarly, I filtered by only New Hampshire.
 # Next, I summarized by the mean of the points and sliced the average in the first row.
 
-q4 <- endorsements_2020 %>% filter(state=="NH") %>% summarize(avgpoints = mean(points)) %>% slice(1) %>% pull(avgpoints)
+q4 <- endorsements_2020 %>% 
+  filter(state=="NH") %>% 
+  summarize(avgpoints = mean(points)) %>% 
+  slice(1) %>% 
+  pull(avgpoints)
 ```
 
 4) Endorsers from New Hampshire have an average of `r q4` endorsement points. (Learn how fivethirtyeight calculates endorsement points here.)
 
 ```{r question5}
-# heree i use abc cde ddddd to do what, dfsdfs
-# i could also have used zzz xxx yyy to achieve the same effect.
+# This time, I used the logical "or" statement to filter by those who endorsed Amy Klobuchar or Elizabeth Warren.
+# I sliced the first row and pulled the total.
 
-q5 <- endorsements_2020 %>% filter(endorsee=="Amy Klobuchar" | endorsee== "Elizabeth Warren") %>% summarize(total=sum(points)) %>% slice(1) %>% pull(total)
+q5 <- endorsements_2020 %>% 
+  filter(endorsee=="Amy Klobuchar" | endorsee== "Elizabeth Warren") %>% 
+  summarize(total=sum(points)) %>% 
+  slice(1) %>% 
+  pull(total)
 ```
 
 5) Between them, the two female candidates who remain in the race (Amy Klobuchar and Elizabeth Warren) have a total of `r q5` endorsement points.
 
 ```{r question6}
-# heree i use abc cde ddddd to do what, dfsdfs
-# i could also have used zzz xxx yyy to achieve the same effect.
+# Using the "$" sign, I selected the appropriate columns to observe the variable class of each column.
 
 q6a <- class(endorsements_2020$position)
 q6b <- class(endorsements_2020$endorser)
@@ -95,35 +102,51 @@ q6c <- class(endorsements_2020$points)
 
 6c. The variable “points” is a `r q6c` numeric class of variable.
 
-```{r creating labels in advance for the axis tick texts}
+```{r labels}
+# For the axis ticks in the graph, I noticed they were custom set in the example. 
+# I set custom tick marks in this code chunk.
+
 xlabels <- c("1950", "'60", "'70", "'80", "'90", "2000", "'10")
 ylabels <- c("40", "45", "50", "55", "60 yrs")
 ```
 
-```{r readying the data for plotting in the next code chunk}
+```{r dataready}
+# Preparing the data for plotting, filtering by only Democratic and Republican parties and grouping by year and party.
+# Creating a variable called avg.age to condense average ages in each year for each party.
+
 age.data <- congress %>% 
   filter(party %in% c("D","R")) %>% 
   group_by(year, party) %>% 
   summarize(avg.age=mean(age))
 ```
 
-```{r the plot itself!}
-
-
-
+```{r plot}
+# Using ggplot2 package, set a plot with year on the x-axis and avg.age on the y-axis, coloring by party.
 ggplot(age.data, aes(year, avg.age, color=party)) + 
+  
+  # Set the plot as a line graph, with a line for each party.
   geom_line(show.legend = FALSE) + 
-  # stg
+  
+  # Setting the title, subtitle, and source caption on the bottom right of plot.
   labs(title="Average Age of Members of Congress", 
       subtitle="At start of term, 1947-2013", 
       caption="source: fivethirtyeight package") + 
+  
+  # Switching colors of the parties to correct colors.
   scale_color_manual(values=c('blue','red')) +
-  # dddddd
-  scale_x_continuous(breaks=seq(1950,2010, 10), 
+  
+  # Setting the limits on the x-axis and breaks of 10 years.
+  scale_x_continuous(breaks=seq(1950, 2010, 10), 
       limits=c(1947, 2013), labels=xlabels) +
-  scale_y_continuous(breaks=seq(40,60, 5), limits=c(40,63), labels=ylabels) +
+  
+  # Setting the limits on the y-axis and breaks of 5 years.
+  scale_y_continuous(breaks=seq(40, 60, 5), limits=c(40, 63), labels=ylabels) +
+  
+  # Creating texts to label each line on the plot.
   annotate("text", x = 1965.7, y = 57, label = "Republicans", color="red") +
   annotate("text", x = 1996.5, y = 58, label = "Democrats", color="blue") +
+  
+  # Cleaning up the aesthetics to resemble the plot in the example.
   theme_fivethirtyeight()
 ```
 
